@@ -3,16 +3,16 @@ const AuthenticationManager = require("../auth/index");
 class AuthMiddleware {
   static async login(req, res, next) {
     try {
-      const { user_name, password } = req.body;
+      const { username, password } = req.body;
       const user = await UserReader.getUserByUsernameAndPassword(
-        user_name,
+        username,
         password
       );
       if (!user) {
-        res.status(401).end();
+        res.status(401).end("User not found.");
       } else {
         const payload = {
-          id: user.id,
+          id: user.ID,
           username: user.username,
           email: user.email,
         };
