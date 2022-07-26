@@ -1,5 +1,6 @@
 const UserReader = require("../../module/users/model/read");
 const AuthenticationManager = require("../auth/index");
+
 class AuthMiddleware {
   static async login(req, res, next) {
     try {
@@ -17,12 +18,7 @@ class AuthMiddleware {
           email: user.email,
         };
         const jwt = AuthenticationManager.getJwtToken(payload);
-        res
-          .cookie("token", jwt.token, {
-            httpOnly: true,
-            maxAge: jwt.expirySeconds * 1000,
-          })
-          .end();
+        res.send(jwt);
       }
     } catch (error) {
       res.status(500).send(error.message);
@@ -30,7 +26,9 @@ class AuthMiddleware {
   }
   static jwtTokenValidation(req, res, next) {
     try {
-      const jwtToken = req.cookie.token;
+      const jwtToken = AuthMiddleware.parseAuthorizationToken(
+        req.headers.authorization
+      );
       if (!jwtToken) {
         throw new Error("Token doesn't exists");
       }
@@ -40,6 +38,13 @@ class AuthMiddleware {
     } catch (error) {
       res.status(401).end();
     }
+  }
+  static parseAuthorizationToken(authorization) {
+    if (!authorization) {
+      throw new Error("Authorization token not found!");
+    }
+    const bearer = authorization.split(" ");
+    return bearer[1];
   }
 }
 module.exports = AuthMiddleware;
