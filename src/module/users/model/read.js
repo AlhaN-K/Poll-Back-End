@@ -10,8 +10,8 @@ class UserReader {
     const query = `select * from users where ID = ${userId}`;
     return DatabaseManager.query(query);
   }
-  static async getUserByUsernameAndPassword(username, password) {
-    const query = `select * from users where username = '${username}' and password = '${password}';`;
+  static async getUserByUsername(username) {
+    const query = `select * from users where username = '${username}';`;
     const result = await DatabaseManager.query(query);
     return result[0];
   }

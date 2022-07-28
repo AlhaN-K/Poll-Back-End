@@ -1,24 +1,30 @@
 const UserReader = require("../../module/users/model/read");
 const AuthenticationManager = require("../auth/index");
+const bcrypt = require("bcrypt");
 
 class AuthMiddleware {
   static async login(req, res, next) {
     try {
       const { username, password } = req.body;
-      const user = await UserReader.getUserByUsernameAndPassword(
-        username,
-        password
-      );
+      console.log(username, password);
+      const user = await UserReader.getUserByUsername(username);
+      console.log(user);
       if (!user) {
         res.status(401).end("User not found.");
       } else {
-        const payload = {
-          id: user.ID,
-          username: user.username,
-          email: user.email,
-        };
-        const jwt = AuthenticationManager.getJwtToken(payload);
-        res.send(jwt);
+        const dbPass = user.password;
+        const comparePassword = await bcrypt.compare(password, dbPass);
+        if (comparePassword) {
+          const payload = {
+            id: user.ID,
+            username: user.username,
+            email: user.email,
+          };
+          const jwt = AuthenticationManager.getJwtToken(payload);
+          res.send(jwt);
+        } else {
+          res.status(403).end("Invalid User.");
+        }
       }
     } catch (error) {
       res.status(500).send(error.message);
