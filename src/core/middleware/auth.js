@@ -6,9 +6,7 @@ class AuthMiddleware {
   static async login(req, res, next) {
     try {
       const { username, password } = req.body;
-      console.log(username, password);
       const user = await UserReader.getUserByUsername(username);
-      console.log(user);
       if (!user) {
         res.status(401).end("User not found.");
       } else {
