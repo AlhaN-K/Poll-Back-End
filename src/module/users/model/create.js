@@ -6,7 +6,7 @@ class UserCreator {
   static async createNewUser(userData) {
     const { username, first_name, last_name, password, email } = userData;
     const dbPass = password;
-    const hashPassword = bcrypt.hash(dbPass, saltRounds);
+    const hashPassword = await bcrypt.hash(dbPass, saltRounds);
     const query = `INSERT INTO users
     (username , first_name, last_name, password, email) 
     VALUES ('${username}','${first_name}','${last_name}','${hashPassword}','${email}');`;
