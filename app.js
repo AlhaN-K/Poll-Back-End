@@ -4,6 +4,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 require("dotenv").config();
 var cors = require("cors");
+const { errors } = require("celebrate");
 var app = express();
 
 const userRouter = require("./src/module/users/router");
@@ -19,4 +20,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/users", userRouter);
 app.use("/polls", pollRouter);
 app.post("/login", AuthMiddleware.login);
+
+app.use(errors());
+
 module.exports = app;
