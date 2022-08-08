@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const UserControler = require("./controller");
+const UserController = require("./controller");
 const AuthMiddleware = require("../../core/middleware/auth");
-router.get("/", AuthMiddleware.jwtTokenValidation, UserControler.getAllUser);
+const UserValidator = require("./validation/index");
+
+router.get("/", AuthMiddleware.jwtTokenValidation, UserController.getAllUser);
 router.get(
   "/:id",
   AuthMiddleware.jwtTokenValidation,
-  UserControler.getUserById
+  UserController.getUserById
 );
-router.post("/", UserControler.createUser);
+router.post("/", UserValidator.createUserSchema, UserController.createUser);
 
 module.exports = router;
