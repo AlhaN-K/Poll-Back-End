@@ -1,6 +1,7 @@
 const UserReader = require("./model/read");
 const UserCreator = require("./model/create");
-class UserControler {
+
+class UserController {
   static async getAllUser(req, res, next) {
     try {
       const users = await UserReader.getAllUsers();
@@ -32,4 +33,4 @@ class UserControler {
     }
   }
 }
-module.exports = UserControler;
+module.exports = UserController;
