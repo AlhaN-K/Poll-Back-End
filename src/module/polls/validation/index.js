@@ -9,11 +9,5 @@ class PollValidator {
       link: Joi.string().required(),
     }),
   });
-  static createPollItemSchema = celebrate({
-    [Segments.BODY]: Joi.object().keys({
-      poll_id: Joi.number().integer().required(),
-      item_text: Joi.string().max(64).required(),
-    }),
-  });
 }
 module.exports = PollValidator;
