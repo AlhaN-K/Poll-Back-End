@@ -40,7 +40,7 @@ class AuthMiddleware {
       req.jwt_payload = payload;
       next();
     } catch (error) {
-      res.status(401).end();
+      res.status(401).end("User not found.");
     }
   }
   static parseAuthorizationToken(authorization) {
