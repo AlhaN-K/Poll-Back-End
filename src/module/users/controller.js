@@ -14,7 +14,7 @@ class UserController {
   static async getUserById(req, res, next) {
     try {
       const userId = req.params.id;
-      if (userId != req.jwt_payload.id) {
+      if (userId != req.loggedInUser.id) {
         throw new Error("You cannot access others data!!");
       }
       const result = await UserReader.getUserById(userId);

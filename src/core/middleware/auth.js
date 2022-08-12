@@ -14,9 +14,11 @@ class AuthMiddleware {
         const comparePassword = await bcrypt.compare(password, dbPass);
         if (comparePassword) {
           const payload = {
-            id: user.ID,
-            username: user.username,
-            email: user.email,
+            user: {
+              id: user.ID,
+              username: user.username,
+              email: user.email,
+            },
           };
           const jwt = AuthenticationManager.getJwtToken(payload);
           res.send(jwt);
@@ -37,9 +39,10 @@ class AuthMiddleware {
         throw new Error("Token doesn't exists");
       }
       const payload = AuthenticationManager.getJwtTokenPayload(jwtToken);
-      req.jwt_payload = payload;
+      req.loggedInUser = payload.user;
       next();
     } catch (error) {
+      console.error(error);
       res.status(401).end("User not found.");
     }
   }
