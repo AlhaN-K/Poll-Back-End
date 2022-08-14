@@ -2,11 +2,29 @@ const express = require("express");
 const router = express.Router();
 const PollController = require("./controller");
 const PollValidator = require("./validation");
+const AuthMiddleware = require("../../core/middleware/auth");
 
-router.get("/", PollController.getPolls);
-router.get("/:id", PollController.getPollById);
-router.post("/", PollValidator.createPollSchema, PollController.createPoll);
-router.patch("/:id", PollController.updatePoll);
-router.delete("/:id", PollController.deletePoll);
+router.get("/", AuthMiddleware.jwtTokenValidation, PollController.getPolls);
+router.get(
+  "/:id",
+  AuthMiddleware.jwtTokenValidation,
+  PollController.getPollById
+);
+router.post(
+  "/",
+  AuthMiddleware.jwtTokenValidation,
+  PollValidator.createPollSchema,
+  PollController.createPoll
+);
+router.patch(
+  "/:id",
+  AuthMiddleware.jwtTokenValidation,
+  PollController.updatePoll
+);
+router.delete(
+  "/:id",
+  AuthMiddleware.jwtTokenValidation,
+  PollController.deletePoll
+);
 
 module.exports = router;
