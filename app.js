@@ -9,7 +9,7 @@ var app = express();
 
 const userRouter = require("./src/module/users/router");
 const pollRouter = require("./src/module/polls/router");
-const pollItemsRouter = require("./src/module/poll_items/router");
+const ItemsRouter = require("./src/module/items/router");
 const AuthMiddleware = require("./src/core/middleware/auth");
 
 app.use(cors({ origin: "*", methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/users", userRouter);
 app.use("/polls", pollRouter);
-app.use("/pollItems", pollItemsRouter);
+app.use("/pollItems", ItemsRouter);
 app.post("/login", AuthMiddleware.login);
 
 app.use(errors());
