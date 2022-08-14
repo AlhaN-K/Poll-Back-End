@@ -24,7 +24,8 @@ class PollController {
   static async createPoll(req, res, next) {
     try {
       const pollData = req.body;
-      const result = await PollCreator.createPoll(pollData);
+      const userId = req.loggedInUser.id;
+      const result = await PollCreator.createPoll(userId, pollData);
       res.send(result);
     } catch (error) {
       next(error);
