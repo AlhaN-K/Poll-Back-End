@@ -12,7 +12,7 @@ class ItemsReader {
     const readById = `
     SELECT * 
     FROM poll_item
-    WHERE poll_item.${ItemId};`;
+    WHERE ID = ${ItemId};`;
     return DatabaseManager.query(readById);
   }
 }
