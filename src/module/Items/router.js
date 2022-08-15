@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const itemsController = require("./controller");
-const itemsValidator = require("./validation/index");
+const ItemsController = require("./controller");
+const ItemsValidator = require("./validation/index");
 const AuthMiddleware = require("../../core/middleware/auth");
 
-router.get("/", AuthMiddleware.jwtTokenValidation, itemsController.getItems);
+router.get("/", AuthMiddleware.jwtTokenValidation, ItemsController.getItems);
 router.get(
   "/:id",
   AuthMiddleware.jwtTokenValidation,
-  itemsController.getItemById
+  ItemsController.getItemById
 );
 router.post(
   "/",
   AuthMiddleware.jwtTokenValidation,
-  itemsValidator.createItemSchema,
-  itemsController.createItems
+  ItemsValidator.createItemSchema,
+  ItemsController.createItems
 );
 
 module.exports = router;
