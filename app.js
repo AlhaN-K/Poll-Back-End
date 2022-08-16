@@ -11,6 +11,7 @@ const userRouter = require("./src/module/users/router");
 const pollRouter = require("./src/module/polls/router");
 const itemsRouter = require("./src/module/items/router");
 const participantRouter = require("./src/module/participants/router");
+const choicesRouter = require("./src/module/choices/router");
 const AuthMiddleware = require("./src/core/middleware/auth");
 
 app.use(cors({ origin: "*", methods: "GET,HEAD,PUT,PATCH,POST,DELETE" }));
@@ -19,10 +20,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
 app.use("/users", userRouter);
 app.use("/polls", pollRouter);
 app.use("/pollItems", itemsRouter);
 app.use("/participants", participantRouter);
+app.use("/choices", choicesRouter);
+
 app.post("/login", AuthMiddleware.login);
 
 app.use(errors());
