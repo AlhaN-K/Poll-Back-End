@@ -8,7 +8,7 @@ class AuthMiddleware {
       const { username, password } = req.body;
       const user = await UserReader.getUserByUsername(username);
       if (!user) {
-        res.status(401).end("User not found.");
+        res.status(401).end("Data not found.");
       } else {
         const dbPass = user.password;
         const comparePassword = await bcrypt.compare(password, dbPass);
@@ -23,7 +23,7 @@ class AuthMiddleware {
           const jwt = AuthenticationManager.getJwtToken(payload);
           res.send(jwt);
         } else {
-          res.status(403).end("Invalid User.");
+          res.status(403).end("Invalid Data.");
         }
       }
     } catch (error) {
@@ -43,7 +43,7 @@ class AuthMiddleware {
       next();
     } catch (error) {
       console.error(error);
-      res.status(401).end("User not found.");
+      res.status(401).end("Data not found.");
     }
   }
   static parseAuthorizationToken(authorization) {
