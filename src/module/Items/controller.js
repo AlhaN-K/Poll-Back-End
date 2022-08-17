@@ -1,3 +1,4 @@
+const DatabaseManager = require("../../core/database/databaseManager");
 const ItemsCreator = require("./model/create");
 const ItemsReader = require("./model/read");
 
@@ -21,8 +22,18 @@ class ItemsController {
   }
   static async createItems(req, res, next) {
     try {
-      const ItemsData = req.body;
-      const result = await ItemsCreator.createItems(ItemsData);
+      const itemsArrayData = req.body;
+      itemsArrayData.forEach(async (item) => {
+        await ItemsCreator.createItems(item);
+      });
+      const pollId = itemsArrayData[0].poll_id;
+      const query = `SELECT ID FROM poll WHERE ID = ${pollId}`;
+      console.log("ItemsData :>> ", itemsArrayData);
+      const getPollById = await DatabaseManager.query(query);
+      if (getPollById[0].length === 0) {
+        res.status(404).send({ message: "Poll doesn't exist!" });
+      }
+      const result = await ItemsCreator.createItems(itemsArrayData);
       res.send(result);
     } catch (error) {
       next(error);
