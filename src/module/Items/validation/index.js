@@ -4,7 +4,8 @@ class ItemsValidator {
   static createItemSchema = celebrate({
     [Segments.BODY]: Joi.array().items(
       Joi.object().keys({
-        item_text: Joi.string().max(64).required(),
+        poll_id: Joi.number().integer().required(),
+        item_text: Joi.any().required(),
       })
     ),
   });
