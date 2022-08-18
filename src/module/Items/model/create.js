@@ -7,7 +7,7 @@ class ItemsCreator {
     INSERT INTO poll_item 
     (poll_id, item_text)  
     VALUES
-    ('${poll_id}','${item_text}');`;
+    (${poll_id},'${item_text}');`;
     return DatabaseManager.query(create);
   }
 }
