@@ -22,6 +22,16 @@ class ParticipantController {
     }
   }
 
+  static async getParticipantByPollId(req, res, next) {
+    try {
+      const pollId = req.params.id;
+      const data = await ParticipantReader.getParticipantByPollId(pollId);
+      res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async createParticipant(req, res, next) {
     try {
       const participantData = req.body;
