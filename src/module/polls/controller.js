@@ -24,8 +24,8 @@ class PollController {
 
   static async getParticipants(req, res, next) {
     try {
-      const pollId = req.params.id;
-      const result = await PollReader.getParticipants(pollId);
+      const userId = req.loggedInUser.id;
+      const result = await PollReader.getParticipants(userId);
       res.send(result);
     } catch (error) {
       next(error);
