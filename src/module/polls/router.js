@@ -10,6 +10,11 @@ router.get(
   AuthMiddleware.jwtTokenValidation,
   PollController.getPollById
 );
+router.get(
+  "/participants/:id",
+  AuthMiddleware.jwtTokenValidation,
+  PollController.getParticipants
+);
 router.post(
   "/",
   AuthMiddleware.jwtTokenValidation,
