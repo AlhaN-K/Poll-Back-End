@@ -14,11 +14,7 @@ router.get(
   AuthMiddleware.jwtTokenValidation,
   ParticipantController.getParticipantById
 );
-router.get(
-  "/id/:id",
-  AuthMiddleware.jwtTokenValidation,
-  ParticipantController.getParticipantByPollId
-);
+router.get("/id/:id", ParticipantController.getParticipantByPollId);
 router.post(
   "/",
   AuthMiddleware.jwtTokenValidation,

@@ -5,11 +5,7 @@ const PollValidator = require("./validation");
 const AuthMiddleware = require("../../core/middleware/auth");
 
 router.get("/", AuthMiddleware.jwtTokenValidation, PollController.getPolls);
-router.get(
-  "/:id",
-  AuthMiddleware.jwtTokenValidation,
-  PollController.getPollById
-);
+router.get("/:id", PollController.getPollById);
 router.get(
   "/participants/:id",
   AuthMiddleware.jwtTokenValidation,
