@@ -11,12 +11,12 @@ class PollReader {
     return DatabaseManager.query(readById);
   }
 
-  static getParticipants(pollId) {
+  static getParticipants(userId) {
     const getParticipants = `
-    SELECT COUNT(*) "participant Numbers"
+    SELECT COUNT(*) "total"
     FROM participant INNER JOIN poll ON participant.poll_id = poll.ID 
-	  WHERE poll.ID = ${pollId}
-    GROUP BY poll_id;`;
+	  WHERE user_id = ${userId}
+    GROUP BY poll.ID;`;
 
     return DatabaseManager.query(getParticipants);
   }
