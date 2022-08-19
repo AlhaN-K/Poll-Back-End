@@ -10,6 +10,7 @@ router.get(
   AuthMiddleware.jwtTokenValidation,
   ChoiceController.getChoiceById
 );
+router.get("/id/:id", ChoiceController.getChoiceById);
 router.post(
   "/",
   AuthMiddleware.jwtTokenValidation,
