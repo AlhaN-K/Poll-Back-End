@@ -10,6 +10,11 @@ router.get(
   AuthMiddleware.jwtTokenValidation,
   ItemsController.getItemById
 );
+router.get(
+  "/id/:id",
+  AuthMiddleware.jwtTokenValidation,
+  ItemsController.getItemByPollId
+);
 router.post(
   "/",
   AuthMiddleware.jwtTokenValidation,

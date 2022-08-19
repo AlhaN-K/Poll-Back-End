@@ -11,6 +11,7 @@ class ItemsController {
       next(error);
     }
   }
+
   static async getItemById(req, res, next) {
     try {
       const ItemId = req.params.id;
@@ -20,6 +21,17 @@ class ItemsController {
       next(error);
     }
   }
+
+  static async getItemByPollId(req, res, next) {
+    try {
+      const pollId = req.params.id;
+      const itemsResult = await ItemsReader.getItemByPollId(pollId);
+      res.send(itemsResult);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async createItems(req, res, next) {
     try {
       const itemsArrayData = req.body;
