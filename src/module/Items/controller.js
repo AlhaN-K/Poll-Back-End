@@ -40,7 +40,6 @@ class ItemsController {
       });
       const pollId = itemsArrayData[0].poll_id;
       const query = `SELECT ID FROM poll WHERE ID = ${pollId}`;
-      console.log("ItemsData :>> ", itemsArrayData);
       const getPollById = await DatabaseManager.query(query);
       if (getPollById[0].length === 0) {
         res.status(404).send({ message: "Poll doesn't exist!" });

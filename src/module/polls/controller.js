@@ -39,7 +39,6 @@ class PollController {
       const pollId = req.params.id;
       const userId = req.loggedInUser.id;
       const pollData = req.body;
-      console.log("pollData :>> ", pollData);
       const result = await PollEditor.updatePollTitle(userId, pollId, pollData);
       res.send(result);
     } catch (error) {
@@ -52,7 +51,6 @@ class PollController {
       const pollId = req.params.id;
       const userId = req.loggedInUser.id;
       const pollData = req.body;
-      console.log("pollData :>> ", pollData);
       const result = await PollEditor.updatePollDescription(
         userId,
         pollId,
