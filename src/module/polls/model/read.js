@@ -1,24 +1,18 @@
 const DatabaseManager = require("../../../core/database/databaseManager");
 
 class PollReader {
-  static getPolls() {
-    const read = `SELECT * FROM poll;`;
-    return DatabaseManager.query(read);
+  static getPolls(userId) {
+    const getParticipants = `
+    SELECT poll.ID, poll.user_id, poll.title, poll.description,
+    COUNT(participant.ID) AS totalParticipants
+    FROM poll LEFT JOIN participant ON poll.ID = participant.poll_id
+	  WHERE user_id = ${userId}
+    GROUP BY poll.ID;`;
+    return DatabaseManager.query(getParticipants);
   }
-
   static getPollById(pollId) {
     const readById = `SELECT * FROM poll WHERE ID = ${pollId};`;
     return DatabaseManager.query(readById);
-  }
-
-  static getParticipants(userId) {
-    const getParticipants = `
-    SELECT COUNT(*) "total"
-    FROM participant INNER JOIN poll ON participant.poll_id = poll.ID 
-	  WHERE user_id = ${userId}
-    GROUP BY poll.ID;`;
-
-    return DatabaseManager.query(getParticipants);
   }
 }
 module.exports = PollReader;
