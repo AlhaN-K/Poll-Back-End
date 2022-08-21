@@ -6,26 +6,18 @@ const PollEditor = require("./model/update");
 class PollController {
   static async getPolls(req, res, next) {
     try {
-      const polls = await PollReader.getPolls();
-      res.send(polls);
-    } catch (error) {
-      next(error);
-    }
-  }
-  static async getPollById(req, res, next) {
-    try {
-      const pollId = req.params.id;
-      const result = await PollReader.getPollById(pollId);
+      const userId = req.loggedInUser.id;
+      const result = await PollReader.getPolls(userId);
       res.send(result);
     } catch (error) {
       next(error);
     }
   }
 
-  static async getParticipants(req, res, next) {
+  static async getPollById(req, res, next) {
     try {
-      const userId = req.loggedInUser.id;
-      const result = await PollReader.getParticipants(userId);
+      const pollId = req.params.id;
+      const result = await PollReader.getPollById(pollId);
       res.send(result);
     } catch (error) {
       next(error);
@@ -42,16 +34,36 @@ class PollController {
       next(error);
     }
   }
-  static async updatePoll(req, res, next) {
+  static async updatePollTitle(req, res, next) {
     try {
       const pollId = req.params.id;
+      const userId = req.loggedInUser.id;
       const pollData = req.body;
-      const result = await PollEditor.updatePoll(pollId, pollData);
+      console.log("pollData :>> ", pollData);
+      const result = await PollEditor.updatePollTitle(userId, pollId, pollData);
       res.send(result);
     } catch (error) {
       next(error);
     }
   }
+
+  static async updatePollDescription(req, res, next) {
+    try {
+      const pollId = req.params.id;
+      const userId = req.loggedInUser.id;
+      const pollData = req.body;
+      console.log("pollData :>> ", pollData);
+      const result = await PollEditor.updatePollDescription(
+        userId,
+        pollId,
+        pollData
+      );
+      res.send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async deletePoll(req, res, next) {
     try {
       const pollId = req.params.id;
