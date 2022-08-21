@@ -6,11 +6,6 @@ const AuthMiddleware = require("../../core/middleware/auth");
 
 router.get("/", AuthMiddleware.jwtTokenValidation, PollController.getPolls);
 router.get("/:id", PollController.getPollById);
-router.get(
-  "/participants/:id",
-  AuthMiddleware.jwtTokenValidation,
-  PollController.getParticipants
-);
 router.post(
   "/",
   AuthMiddleware.jwtTokenValidation,
@@ -18,9 +13,14 @@ router.post(
   PollController.createPoll
 );
 router.patch(
-  "/:id",
+  "/title/:id",
   AuthMiddleware.jwtTokenValidation,
-  PollController.updatePoll
+  PollController.updatePollTitle
+);
+router.patch(
+  "/description/:id",
+  AuthMiddleware.jwtTokenValidation,
+  PollController.updatePollDescription
 );
 router.delete(
   "/:id",
