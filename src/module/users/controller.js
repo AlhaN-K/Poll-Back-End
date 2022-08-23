@@ -1,5 +1,6 @@
 const UserReader = require("./model/read");
 const UserCreator = require("./model/create");
+const UserDeleter = require("./model/delete");
 
 class UserController {
   static async getAllUser(req, res, next) {
@@ -30,6 +31,16 @@ class UserController {
       res.send(result);
     } catch (err) {
       res.status(500).send(err.message);
+    }
+  }
+
+  static async deleteUser(req, res, next) {
+    try {
+      const userId = req.params.id;
+      const result = await UserDeleter.deleteUser(userId);
+      res.send(result);
+    } catch (err) {
+      next(err);
     }
   }
 }

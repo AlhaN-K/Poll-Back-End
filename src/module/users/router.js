@@ -11,5 +11,9 @@ router.get(
   UserController.getUserById
 );
 router.post("/", UserValidator.createUserSchema, UserController.createUser);
-
+router.delete(
+  "/:id",
+  AuthMiddleware.jwtTokenValidation,
+  UserController.deleteUser
+);
 module.exports = router;
