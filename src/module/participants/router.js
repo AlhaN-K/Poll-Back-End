@@ -24,6 +24,7 @@ router.post(
 router.patch(
   "/:id",
   AuthMiddleware.jwtTokenValidation,
+  ParticipantValidator.updateParticipantSchema,
   ParticipantController.updateParticipant
 );
 router.delete(

@@ -15,11 +15,13 @@ router.post(
 router.patch(
   "/title/:id",
   AuthMiddleware.jwtTokenValidation,
+  PollValidator.updateTitleSchema,
   PollController.updatePollTitle
 );
 router.patch(
   "/description/:id",
   AuthMiddleware.jwtTokenValidation,
+  PollValidator.updateDescriptionSchema,
   PollController.updatePollDescription
 );
 router.delete(
